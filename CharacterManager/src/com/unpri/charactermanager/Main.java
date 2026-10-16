@@ -1,57 +1,87 @@
 package com.unpri.charactermanager;
 
-// Import class Character dan enum CharacterType dari package model
 import com.unpri.charactermanager.model.Character;
 import com.unpri.charactermanager.model.CharacterType;
+import com.unpri.charactermanager.model.CharacterManager;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== Character Manager ===");
 
-        // ===== Bagian A: membuat 3 karakter =====
-        System.out.println("\n--- Daftar Karakter ---");
+        System.out.println("=== Character Manager v0.2 — CRUD Test ===\n");
 
-        // Memakai constructor 1: HP dan attack dihitung otomatis dari level,
-        // id juga dibuat otomatis oleh class Character
-        Character c1 = new Character("Yapriani", CharacterType.WARRIOR, 5);
-        Character c2 = new Character("Yulya", CharacterType.ARCHER, 3);
-        Character c3 = new Character("Juandi", CharacterType.MAGE, 4);
+        CharacterManager manager = new CharacterManager();
 
-        // println memanggil toString() milik Character secara otomatis
-        System.out.println(c1);
-        System.out.println(c2);
-        System.out.println(c3);
+        // 1. Tambah beberapa karakter
+        manager.addCharacter(new Character("Arjuna", CharacterType.WARRIOR, 5));
+        manager.addCharacter(new Character("Merlin", CharacterType.MAGE, 3));
+        manager.addCharacter(new Character("Athena", CharacterType.ARCHER, 4));
 
-        // ===== Demo level up =====
-        System.out.println("\n--- Demo Level Up ---");
-        System.out.println("Sebelum: " + c3);
+        // 2. Coba tambah DUPLIKAT nama — seharusnya DITOLAK
+        System.out.println();
+        manager.addCharacter(new Character("Arjuna", CharacterType.HEALER, 1));
 
-        // setLevel() menghitung ulang HP dan attack di dalam class Character,
-        // jadi di sini cukup panggil setLevel(7) saja
-        c3.setLevel(7);
-        System.out.println("Sesudah: " + c3);
+        // 3. Tampilkan total karakter
+        System.out.println("\nTotal karakter saat ini: " + manager.getTotalCharacters());
 
-        // ===== Bagian B: karakter baru + mana + isAlive() =====
-        System.out.println("\n--- Mini-Challenge ---");
-        Character c4 = new Character("Budjus", CharacterType.HEALER, 2);
+        // 4. Cari karakter
+        System.out.println("\n--- Pencarian ---");
+        Character hasil = manager.findByName("Merlin");
+        System.out.println(hasil != null ? "Ditemukan: " + hasil : "Tidak ditemukan");
 
-        // Mengisi mana lewat setter, karena atribut mana bersifat private
-        c4.setMana(50);
-        System.out.println(c4);
-        System.out.println("Mana: " + c4.getMana());
+        Character tidakAda = manager.findByName("Zeus");
+        System.out.println(tidakAda != null ? "Ditemukan: " + tidakAda : "Zeus tidak ditemukan (sesuai harapan)");
 
-        // isAlive() mengembalikan true kalau hitPoints > 0
-        System.out.println("Apakah " + c4.getName() + " hidup? " + c4.isAlive());
+        // 5. Hapus karakter
+        System.out.println("\n--- Penghapusan ---");
+        manager.removeCharacter("Athena");
+        System.out.println("Total setelah hapus: " + manager.getTotalCharacters());
 
-        // ===== Bukti validasi setMana() =====
-        System.out.println("\n--- Validasi Mana ---");
-        try {
-            // Nilai negatif akan ditolak, setMana() melempar IllegalArgumentException
-            c4.setMana(-10);
-        } catch (IllegalArgumentException e) {
-            // Exception ditangkap supaya program tidak berhenti,
-            // lalu pesan error dari setMana() ditampilkan
-            System.out.println("Validasi berfungsi: " + e.getMessage());
+        // 6. Tampilkan semua karakter yang tersisa
+        System.out.println("\n--- Daftar Karakter Tersisa ---");
+        for (Character c : manager.getAllCharacters()) {
+            System.out.println(c);
         }
+
+         // ===== EKSPERIMEN: Object Reference =====
+        System.out.println("\n--- Eksperimen Reference ---");
+
+        Character asli = manager.findByName("Arjuna");
+        Character duplikatReferensi = asli;             // menyalin REFERENSI, bukan membuat object baru
+
+        System.out.println("Level Arjuna sebelum: " + asli.getLevel());
+        duplikatReferensi.setLevel(99);                  // mengubah LEWAT variabel lain
+
+        System.out.println("Level Arjuna sesudah (lewat 'asli'): " + asli.getLevel());
+        System.out.println("asli == duplikatReferensi? " + (asli == duplikatReferensi));
+
+        // Bandingkan dengan getAllCharacters() yang mengembalikan SALINAN LIST:
+        java.util.ArrayList<Character> salinanList = manager.getAllCharacters();
+        salinanList.add(new Character("Hantu", CharacterType.MAGE, 1));   // tambah ke SALINAN list
+
+        System.out.println("Total di manager asli: " + manager.getTotalCharacters());
+        System.out.println("Total di salinan list : " + salinanList.size());
+
+                // ===== MINI-CHALLENGE =====
+        System.out.println("\n--- Mini-Challenge ---");
+        System.out.println("Rata-rata level: " + manager.getAverageLevel());
+
+        System.out.println("\nSemua WARRIOR:");
+        for (Character c : manager.findByType(CharacterType.WARRIOR)) {
+            System.out.println(c);
+        }
+
+        System.out.println("\nSemua HEALER (seharusnya kosong):");
+        System.out.println("Jumlah: " + manager.findByType(CharacterType.HEALER).size());
+
+        // Uji list kosong
+        CharacterManager kosong = new CharacterManager();
+        System.out.println("\nRata-rata manager kosong: " + kosong.getAverageLevel());
+
+        // ===== BAGIAN C: renameCharacter() =====
+        System.out.println("\n--- Fitur Mandiri: renameCharacter() ---");
+        manager.renameCharacter("Merlin", "Arjuna");   // ditolak: bentrok
+        manager.renameCharacter("Zeus", "Thor");       // ditolak: tidak ada
+        manager.renameCharacter("Merlin", "Gandalf");  // berhasil
+        System.out.println(manager.findByName("Gandalf"));
     }
 }

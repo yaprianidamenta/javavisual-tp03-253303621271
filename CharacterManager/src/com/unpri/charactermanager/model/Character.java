@@ -90,6 +90,14 @@ public class Character {
         this.mana = mana;
     }
 
+    // Package-private: hanya CharacterManager (satu package) yang boleh memanggil
+    void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nama tidak boleh kosong");
+        }
+        this.name = name;
+    }
+
     // Karakter dianggap hidup selama hitPoints lebih dari 0
     public boolean isAlive() {
         return hitPoints > 0;
@@ -106,5 +114,15 @@ public class Character {
         return "Character[id=" + id + ", name=" + name + ", type=" + type
                 + ", level=" + level + ", HP=" + hitPoints
                 + ", ATK=" + attackPower + ", mana=" + mana + "]";
+    }
+
+      // ===== equals(): membandingkan ISI DATA, bukan alamat memori =====
+    // Dua Character dianggap "sama" jika NAMA-nya identik (case-sensitive)
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;                    // optimasi: jika memang object yang sama persis
+        if (!(obj instanceof Character)) return false;    // jika bukan Character, pasti tidak sama
+        Character other = (Character) obj;                // casting aman karena sudah dicek instanceof
+        return this.name.equals(other.name);               // bandingkan isi atribut name (String punya equals sendiri)
     }
 }
