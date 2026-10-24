@@ -14,10 +14,12 @@ public class MainWindow extends JFrame {
 
     private JPanel mainPanel;
     private ArrayList<Character> characterList;   // data yang akan ditampilkan
+    private double averageLevel;                  // statistik dari Model
 
-    public MainWindow(ArrayList<Character> characterList) {
-        super("Character Manager v0.3");    // judul title bar
-        this.characterList = characterList;  // simpan data yang diterima dari Main.java
+    public MainWindow(ArrayList<Character> characterList, double averageLevel) {
+        super("Character Manager v0.3");           // judul title bar
+        this.characterList = characterList;
+        this.averageLevel = averageLevel;
 
         initComponents();
 
@@ -32,16 +34,20 @@ public class MainWindow extends JFrame {
         JLabel titleLabel = new JLabel("=== Daftar Karakter (" + characterList.size() + ") ===");
         mainPanel.add(titleLabel);
 
-        // Loop setiap Character, buat SATU JLabel baru untuk masing-masing
+        // Satu JLabel untuk setiap Character
         for (Character c : characterList) {
             String info = c.getName() + " | " + c.getType() +
                           " | Lv." + c.getLevel() +
                           " | HP:" + c.getHitPoints() +
                           " | ATK:" + c.getAttackPower();
             JLabel characterLabel = new JLabel(info);
-            mainPanel.add(characterLabel);   // setiap karakter mendapat JLabel sendiri
+            mainPanel.add(characterLabel);
         }
 
-        add(mainPanel);
+        // Label statistik: hanya menampilkan nilai hasil hitung dari Model
+        JLabel statLabel = new JLabel(String.format("Rata-rata Level: %.1f", averageLevel));
+        mainPanel.add(statLabel);
+
+        add(mainPanel);   // baris TERAKHIR
     }
 }
