@@ -14,6 +14,8 @@ public class Main {
         manager.addCharacter(new Character("Arjuna", CharacterType.WARRIOR, 5));
         manager.addCharacter(new Character("Merlin", CharacterType.MAGE, 3));
         manager.addCharacter(new Character("Athena", CharacterType.ARCHER, 4));
+        manager.addCharacter(new Character("Zuan", CharacterType.WARRIOR, 8));
+        manager.addCharacter(new Character("Sazy", CharacterType.MAGE, 6));
 
         // 2. Jalankan GUI dengan AMAN di Event Dispatch Thread
         SwingUtilities.invokeLater(() -> {
