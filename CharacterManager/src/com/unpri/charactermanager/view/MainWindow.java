@@ -1,12 +1,8 @@
 package com.unpri.charactermanager.view;
 
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,66 +11,60 @@ import com.unpri.charactermanager.model.Character;
 
 public class MainWindow extends JFrame {
 
-    private JPanel mainPanel;                      // container utama
-    private ArrayList<Character> characterList;    // data dari Main.java (Model)
+    private JPanel mainPanel;                     // panel utama tempat semua kartu
+    private ArrayList<Character> characterList;   // data karakter dari Main.java
 
     public MainWindow(ArrayList<Character> characterList) {
-        super("Character Manager v0.4");           // versi naik: sprint #4
+        super("Character Manager v0.4");          // judul jendela, versinya naik jadi 0.4
         this.characterList = characterList;
 
-        initComponents();                          // 1. susun semua komponen dulu
+        initComponents();   // susun semua komponen dulu, baru ukuran jendela dihitung
 
-        pack();                                    // 2. ukuran jendela mengikuti isi
-        setMinimumSize(new Dimension(420, 300));   // 3. cegah jendela terlalu kecil
+        pack();             // ukuran jendela ngikutin isinya, jadi nggak perlu setSize manual
+        setMinimumSize(new Dimension(AppTheme.MIN_WIDTH, AppTheme.MIN_HEIGHT)); // biar nggak bisa dikecilin berlebihan
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);               // 4. pusatkan SETELAH pack()
+        setLocationRelativeTo(null);  // taruh di tengah layar, harus SETELAH pack() kalau nggak posisinya miring
     }
 
     private void initComponents() {
-        // GridLayout(0, 1, 0, 8): berapa pun baris, 1 kolom, jarak vertikal 8 px.
-        // (Layout dibahas penuh di Pertemuan 5; di sini dipakai agar kartu tersusun rapi.)
-        mainPanel = new JPanel(new GridLayout(0, 1, 0, 8));
-        mainPanel.setBackground(AppTheme.BG_MAIN);                           // warna latar panel
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16)); // padding luar
+        // GridLayout 1 kolom, baris menyesuaikan jumlah karakter, jarak antar kartu dari AppTheme
+        mainPanel = new JPanel(new GridLayout(0, 1, 0, AppTheme.CARD_GAP));
+        mainPanel.setBackground(AppTheme.BG_MAIN);
+        mainPanel.setBorder(AppTheme.PANEL_BORDER);
 
-        mainPanel.add(createTitleLabel());          // judul di atas
+        mainPanel.add(createTitleLabel());           // judul paling atas
 
-        for (Character c : characterList) {          // satu kartu per karakter
+        for (Character c : characterList) {          // tiap karakter dibikinin satu kartu
             mainPanel.add(createCharacterLabel(c));
         }
 
-        add(mainPanel);                             // pasang panel ke JFrame
+        add(mainPanel);   // terakhir, pasang panel ke jendela
     }
 
-    /** Membuat judul layar. */
+    // Bikin label judul di bagian atas
     private JLabel createTitleLabel() {
         JLabel lbl = new JLabel("Daftar Karakter (" + characterList.size() + ")",
-                                SwingConstants.CENTER);   // teks di tengah label
-        lbl.setFont(AppTheme.FONT_TITLE);                 // font judul dari tema
-        lbl.setForeground(AppTheme.TEXT_MAIN);            // warna teks judul
+                                SwingConstants.CENTER);  // teksnya di tengah
+        lbl.setFont(AppTheme.FONT_TITLE);
+        lbl.setForeground(AppTheme.TEXT_MAIN);
         return lbl;
     }
 
-    /** Membuat satu kartu karakter (JLabel berwarna sesuai role). */
+    // Bikin satu kartu buat satu karakter
     private JLabel createCharacterLabel(Character c) {
+        // View cuma BACA data lewat getter, nggak ngubah apa-apa di Model
         String info = c.getName() + " | " + c.getType()
                     + " | Lv." + c.getLevel()
                     + " | HP:" + c.getHitPoints()
-                    + " | ATK:" + c.getAttackPower();     // hanya MEMBACA lewat getter
+                    + " | ATK:" + c.getAttackPower();
 
         JLabel lbl = new JLabel(info);
-        if (c.getLevel() >= AppTheme.HIGH_LEVEL_THRESHOLD) {
-            lbl.setFont(AppTheme.FONT_BODY.deriveFont(Font.BOLD));  // tebal
-            lbl.setForeground(AppTheme.GOLD);                       // emas
-        } else {
-            lbl.setFont(AppTheme.FONT_BODY);                        // biasa
-            lbl.setForeground(AppTheme.TEXT_LIGHT);                 // putih
-        }                   // teks putih
-        lbl.setBackground(AppTheme.colorFor(c.getType()));        // warna dari role
-        lbl.setOpaque(true);                                      // WAJIB agar background tampak
-        lbl.setBorder(AppTheme.CARD_BORDER);                      // padding kartu
-        lbl.setToolTipText(AppTheme.describe(c.getType()));       // bantuan saat hover
-        lbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // kursor tangan
+        lbl.setFont(AppTheme.FONT_BODY);
+        lbl.setForeground(AppTheme.TEXT_LIGHT);
+        lbl.setBackground(AppTheme.colorFor(c.getType())); // warna kartu ngikutin role
+        lbl.setOpaque(true);   // WAJIB! JLabel itu transparan bawaannya, tanpa ini background nggak kelihatan
+        lbl.setBorder(AppTheme.CARD_BORDER);
+        lbl.setToolTipText(AppTheme.describe(c.getType())); // muncul pas mouse diarahkan ke kartu
         return lbl;
     }
 }
