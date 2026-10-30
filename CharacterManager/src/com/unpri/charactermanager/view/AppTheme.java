@@ -52,7 +52,22 @@ public final class AppTheme {
             case WARRIOR: return Color.decode("#d63031"); // merah
             case MAGE:    return Color.decode("#0984e3"); // biru
             case ARCHER:  return Color.decode("#00b894"); // hijau
+            case HEALER:  return Color.decode("#6c5ce7"); // ungu, tadi lupa nambahin role ini
             default:      return Color.GRAY;              // jaga-jaga kalau nanti ada role baru
+        }
+    }
+
+        /**
+     * Teks penjelasan tiap role, nanti dipakai buat tooltip pas kartu di-hover.
+     * Sama kayak warna, ini juga urusan tampilan jadi ditaruh di AppTheme.
+     */
+    public static String describe(CharacterType type) {
+        switch (type) {
+            case WARRIOR: return "Warrior: jarak dekat, HP tinggi";
+            case MAGE:    return "Mage: serangan sihir, HP rendah";
+            case ARCHER:  return "Archer: jarak jauh, seimbang";
+            case HEALER:  return "Healer: penyembuh tim";
+            default:      return "Role belum terdaftar";
         }
     }
 }
