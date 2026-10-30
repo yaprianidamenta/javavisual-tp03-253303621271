@@ -16,10 +16,12 @@ public class Main {
         manager.addCharacter(new Character("Athena", CharacterType.ARCHER, 4));
         manager.addCharacter(new Character("Zuan", CharacterType.WARRIOR, 8));
         manager.addCharacter(new Character("Sazy", CharacterType.MAGE, 6));
+        manager.addCharacter(new Character("Gatotkaca", CharacterType.WARRIOR, 7)); // level tinggi
+        manager.addCharacter(new Character("Morgana", CharacterType.MAGE, 1));      // level rendah
 
         // 2. Jalankan GUI dengan AMAN di Event Dispatch Thread
         SwingUtilities.invokeLater(() -> {
-            MainWindow window = new MainWindow(manager.getAllCharacters(), manager.getAverageLevel());
+            MainWindow window = new MainWindow(manager.getAllCharacters());
             window.setVisible(true);    // WAJIB
         });
     }
