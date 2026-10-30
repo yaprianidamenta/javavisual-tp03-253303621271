@@ -28,6 +28,9 @@ public final class AppTheme {
     public static final Border CARD_BORDER =
             BorderFactory.createEmptyBorder(8, 12, 8, 12); // atas, kiri, bawah, kanan
 
+    // ---------- Aturan tampilan ----------
+    public static final int HIGH_LEVEL_THRESHOLD = 5; // level >= ini tampil emas dan tebal
+
     private AppTheme() { }  // class utilitas: konstruktor private mencegah new AppTheme()
 
     /** Menerjemahkan role (data Model) menjadi warna kartu (urusan View). */

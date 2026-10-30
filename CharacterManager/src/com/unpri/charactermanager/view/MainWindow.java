@@ -1,5 +1,6 @@
 package com.unpri.charactermanager.view;
 
+import java.awt.Font;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -62,8 +63,13 @@ public class MainWindow extends JFrame {
                     + " | ATK:" + c.getAttackPower();     // hanya MEMBACA lewat getter
 
         JLabel lbl = new JLabel(info);
-        lbl.setFont(AppTheme.FONT_BODY);                          // font isi
-        lbl.setForeground(AppTheme.TEXT_LIGHT);                   // teks putih
+        if (c.getLevel() >= AppTheme.HIGH_LEVEL_THRESHOLD) {
+            lbl.setFont(AppTheme.FONT_BODY.deriveFont(Font.BOLD));  // tebal
+            lbl.setForeground(AppTheme.GOLD);                       // emas
+        } else {
+            lbl.setFont(AppTheme.FONT_BODY);                        // biasa
+            lbl.setForeground(AppTheme.TEXT_LIGHT);                 // putih
+        }                   // teks putih
         lbl.setBackground(AppTheme.colorFor(c.getType()));        // warna dari role
         lbl.setOpaque(true);                                      // WAJIB agar background tampak
         lbl.setBorder(AppTheme.CARD_BORDER);                      // padding kartu
