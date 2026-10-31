@@ -20,6 +20,8 @@ public final class AppTheme {
     public static final Color TEXT_MAIN  = Color.decode("#dfe6e9");
     // Teks di dalam kartu, putih karena latarnya berwarna
     public static final Color TEXT_LIGHT = Color.WHITE;
+    // Warna emas buat karakter level tinggi, biar langsung kelihatan beda dari yang lain
+    public static final Color GOLD = Color.decode("#fdcb6e");
 
     // ---------- Font ----------
     // Pakai nama font logical (SansSerif/Monospaced), soalnya kalau nama font
@@ -39,6 +41,11 @@ public final class AppTheme {
     public static final int MIN_WIDTH  = 420;  // lebar minimum jendela
     public static final int MIN_HEIGHT = 300;  // tinggi minimum jendela
 
+    // ---------- Aturan tampilan ----------
+    // Batas level "tinggi". Aku jadiin konstanta bernama biar angka 5 nggak nyelip
+    // di MainWindow, kalau mau ganti batasnya cukup ubah di sini aja
+    public static final int HIGH_LEVEL_THRESHOLD = 5;
+
     // Konstruktor dibuat private karena class ini isinya static semua,
     // jadi nggak perlu (dan nggak boleh) dibuat objeknya
     private AppTheme() { }
@@ -52,7 +59,7 @@ public final class AppTheme {
             case WARRIOR: return Color.decode("#d63031"); // merah
             case MAGE:    return Color.decode("#0984e3"); // biru
             case ARCHER:  return Color.decode("#00b894"); // hijau
-            case HEALER:  return Color.decode("#6c5ce7"); // ungu, tadi lupa nambahin role ini
+            case HEALER:  return Color.decode("#6c5ce7"); // ungu
             default:      return Color.GRAY;              // jaga-jaga kalau nanti ada role baru
         }
     }
