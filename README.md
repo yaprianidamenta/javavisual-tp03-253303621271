@@ -7,16 +7,16 @@ satu class bernama `AppTheme` di package `view`, lalu `MainWindow` v0.4 memakain
 
 **Sebelum (v0.3)**
 
-![Tampilan sebelum](screenshots/v3.0%20Sebelum.png)
+![Tampilan sebelum](screenshots/v0.3-sebelum.png)
 
 **Sesudah (v0.4)**: 9 karakter, 4 role berwarna, level tinggi emas dan tebal,
 dan kartu level 1 dinonaktifkan.
 
-![Tampilan sesudah](screenshots/v4.0-sesudah-9-karakter.png)
+![Tampilan sesudah](screenshots/v0.4-sesudah.png)
 
-**Mini-Challenge**: karakter level 5 ke atas tampil emas dan tebal.
+**Model tidak berubah**
 
-![Mini Challenge](screenshots/v4.0%20Mini%20Challenge.png)
+![Bukti model tidak berubah](screenshots/model-tidak-berubah.png)
 
 ### Kenapa warna disimpan di AppTheme, bukan di Character?
 
@@ -27,7 +27,6 @@ Dengan `AppTheme`, kalau mau ganti tema aku cukup edit satu file tanpa menyentuh
 model sama sekali. Buktinya, `git diff` untuk package `model` kosong antara
 Sprint #3 dan Sprint #4.
 
-![Bukti model tidak berubah](screenshots/model_tidak_berubah.png)
 
 ### Dua properti tambahan
 
@@ -61,4 +60,4 @@ dan malah bikin kartunya kelihatan "mati" seperti yang aku mau.
 
 ### Analisis Bagian D
 
-[Link Google Docs](TEMPEL_LINK_DI_SINI)
+[Link Google Docs](https://docs.google.com/document/d/1vxYQroePyYYbB6DLnQfrNsOp3UoTcvUwCyr92Q57hjU/edit?usp=sharing)
