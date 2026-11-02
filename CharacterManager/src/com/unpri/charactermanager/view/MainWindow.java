@@ -1,5 +1,6 @@
 package com.unpri.charactermanager.view;
 
+import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -59,8 +60,16 @@ public class MainWindow extends JFrame {
                     + " | ATK:" + c.getAttackPower();
 
         JLabel lbl = new JLabel(info);
-        lbl.setFont(AppTheme.FONT_BODY);
-        lbl.setForeground(AppTheme.TEXT_LIGHT);
+        // Level >= batas tampil emas dan tebal, sisanya tampil biasa.
+        // Batasnya diambil dari AppTheme, bukan ditulis angka langsung di sini
+        if (c.getLevel() >= AppTheme.HIGH_LEVEL_THRESHOLD) {
+            // deriveFont(Font.BOLD) bikin versi tebal dari font tema tanpa bikin Font baru
+            lbl.setFont(AppTheme.FONT_BODY.deriveFont(Font.BOLD));
+            lbl.setForeground(AppTheme.GOLD);
+        } else {
+            lbl.setFont(AppTheme.FONT_BODY);
+            lbl.setForeground(AppTheme.TEXT_LIGHT);
+        }
         lbl.setBackground(AppTheme.colorFor(c.getType())); // warna kartu ngikutin role
         lbl.setOpaque(true);   // WAJIB! JLabel itu transparan bawaannya, tanpa ini background nggak kelihatan
         lbl.setBorder(AppTheme.CARD_BORDER);
