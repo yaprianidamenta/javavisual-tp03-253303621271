@@ -74,6 +74,8 @@ public class MainWindow extends JFrame {
         lbl.setOpaque(true);   // WAJIB! JLabel itu transparan bawaannya, tanpa ini background nggak kelihatan
         lbl.setBorder(AppTheme.CARD_BORDER);
         lbl.setToolTipText(AppTheme.describe(c.getType())); // muncul pas mouse diarahkan ke kartu
+        // Karakter level pemula tampil nonaktif. Batasnya dari AppTheme, bukan angka langsung
+        lbl.setEnabled(c.getLevel() > AppTheme.DISABLED_LEVEL);
         return lbl;
     }
 }
