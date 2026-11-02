@@ -46,6 +46,10 @@ public final class AppTheme {
     // di MainWindow, kalau mau ganti batasnya cukup ubah di sini aja
     public static final int HIGH_LEVEL_THRESHOLD = 5;
 
+    // Karakter dengan level segini (atau kurang) dianggap pemula, kartunya dinonaktifkan.
+    // Dijadiin konstanta biar angka 1 nggak nyelip di MainWindow
+    public static final int DISABLED_LEVEL = 1;
+
     // Konstruktor dibuat private karena class ini isinya static semua,
     // jadi nggak perlu (dan nggak boleh) dibuat objeknya
     private AppTheme() { }
