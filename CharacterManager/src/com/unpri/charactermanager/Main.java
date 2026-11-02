@@ -18,6 +18,8 @@ public class Main {
         manager.addCharacter(new Character("Sazy", CharacterType.MAGE, 6));
         manager.addCharacter(new Character("Gatotkaca", CharacterType.WARRIOR, 7)); // level tinggi
         manager.addCharacter(new Character("Morgana", CharacterType.MAGE, 1));      // level rendah
+        manager.addCharacter(new Character("Elara", CharacterType.HEALER, 2));
+        manager.addCharacter(new Character("Seraphina", CharacterType.HEALER, 9));
 
         // 2. Jalankan GUI dengan AMAN di Event Dispatch Thread
         SwingUtilities.invokeLater(() -> {
