@@ -22,6 +22,8 @@ public final class AppTheme {
     public static final Color TEXT_LIGHT = Color.WHITE;
     // Warna emas buat karakter level tinggi, biar langsung kelihatan beda dari yang lain
     public static final Color GOLD = Color.decode("#fdcb6e");
+    public static final Color BG_STATUS  = Color.decode("#0d0d1a"); // latar bar status: lebih gelap
+    public static final Color TEXT_MUTED = Color.decode("#9d9dbf"); // teks sekunder / metadata
 
     // ---------- Font ----------
     // Pakai nama font logical (SansSerif/Monospaced), soalnya kalau nama font
