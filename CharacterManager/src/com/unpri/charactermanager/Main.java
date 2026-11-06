@@ -20,6 +20,11 @@ public class Main {
         manager.addCharacter(new Character("Bima", CharacterType.MAGE, 1));      // level rendah
         manager.addCharacter(new Character("Circe", CharacterType.MAGE, 2));
 
+        CharacterType[] types = CharacterType.values();
+        for (int i = 1; i <= 32; i++) {
+        manager.addCharacter(new Character("Hero" + i, types[i % types.length], (i % 8) + 1));
+        }
+
         // 2. Jalankan GUI dengan AMAN di Event Dispatch Thread
         SwingUtilities.invokeLater(() -> {
             MainWindow window = new MainWindow(manager.getAllCharacters());
