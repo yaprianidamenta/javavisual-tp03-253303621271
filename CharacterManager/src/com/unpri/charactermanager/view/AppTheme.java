@@ -52,6 +52,11 @@ public final class AppTheme {
     // Dijadiin konstanta biar angka 1 nggak nyelip di MainWindow
     public static final int DISABLED_LEVEL = 1;
 
+    // ---------- Info aplikasi ----------
+    // Satu sumber versi, dipakai di judul jendela dan label di bar status
+    public static final String APP_VERSION = "v0.5";
+
+
     // Konstruktor dibuat private karena class ini isinya static semua,
     // jadi nggak perlu (dan nggak boleh) dibuat objeknya
     private AppTheme() { }

@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 // import java.awt.Color; kuhapus pak karna ada problems unused import, biar bersih aja
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+// import java.awt.FlowLayout; dihapus karena sudah tidak dipakai (status bar pakai BorderLayout)
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.Box;
@@ -22,7 +22,7 @@ public class MainWindow extends JFrame {
     private ArrayList<Character> characterList;     // data dari Main.java (Model)
 
     public MainWindow(ArrayList<Character> characterList) {
-        super("Character Manager v0.5");            // sprint #5
+        super("Character Manager " + AppTheme.APP_VERSION);     // sprint #5
         this.characterList = characterList;
 
         initComponents();                           // 1. susun semua area
@@ -129,15 +129,22 @@ public class MainWindow extends JFrame {
         return legend;
     }
 
-    /** SOUTH: bar status rata kiri. */
+        /** SOUTH: status rata kiri, versi rata kanan. */
     private JPanel createStatusPanel() {
-        JPanel status = new JPanel(new FlowLayout(FlowLayout.LEFT, 16, 6));
+        JPanel status = new JPanel(new BorderLayout());
         status.setBackground(AppTheme.BG_STATUS);
+        status.setBorder(BorderFactory.createEmptyBorder(6, 16, 6, 16));
 
         JLabel lbl = new JLabel("Total: " + characterList.size() + " karakter  |  Siap");
         lbl.setFont(AppTheme.FONT_MONO);
         lbl.setForeground(AppTheme.TEXT_MUTED);
-        status.add(lbl);
+
+        JLabel version = new JLabel(AppTheme.APP_VERSION);
+        version.setFont(AppTheme.FONT_MONO);
+        version.setForeground(AppTheme.TEXT_MUTED);
+
+        status.add(lbl, BorderLayout.WEST);
+        status.add(version, BorderLayout.EAST);
         return status;
     }
 }
