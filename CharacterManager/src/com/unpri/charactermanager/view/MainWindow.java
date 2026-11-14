@@ -9,7 +9,6 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,20 +21,20 @@ public class MainWindow extends JFrame {
     private ArrayList<Character> characterList;     // data dari Main.java (Model)
 
     public MainWindow(ArrayList<Character> characterList) {
-        super("Character Manager " + AppTheme.APP_VERSION);     // sprint #5
+        super("Character Manager " + AppTheme.APP_VERSION);
         this.characterList = characterList;
 
         initComponents();                           // 1. susun semua area
 
         pack();                                     // 2. ukuran awal = preferred size isi
-        setMinimumSize(new Dimension(560, 380));    // 3. batas terkecil yang masih rapi
+        setMinimumSize(new Dimension(AppTheme.MIN_WIDTH, AppTheme.MIN_HEIGHT)); // 3. batas terkecil
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);                // 4. pusatkan SETELAH pack()
     }
 
     private void initComponents() {
         getContentPane().setBackground(AppTheme.BG_MAIN);  // warna di balik semua panel
-        setLayout(new BorderLayout());                     // kerangka 4 wilayah (JFrame meneruskan ke content pane)
+        setLayout(new BorderLayout());                     // kerangka 4 wilayah
 
         add(createHeaderPanel(), BorderLayout.NORTH);      // judul + jumlah
         add(createListArea(),    BorderLayout.CENTER);     // daftar berscroll: satu-satunya yang tumbuh
@@ -45,9 +44,9 @@ public class MainWindow extends JFrame {
 
     /** NORTH: judul di kiri, jumlah karakter di kanan. */
     private JPanel createHeaderPanel() {
-        JPanel header = new JPanel(new BorderLayout());     // panel bersarang dengan layout sendiri
+        JPanel header = new JPanel(new BorderLayout());
         header.setBackground(AppTheme.BG_MAIN);
-        header.setBorder(BorderFactory.createEmptyBorder(16, 16, 8, 16)); // atas, kiri, bawah, kanan
+        header.setBorder(AppTheme.HEADER_BORDER);
 
         JLabel title = new JLabel("Character Manager");
         title.setFont(AppTheme.FONT_TITLE);
@@ -64,7 +63,7 @@ public class MainWindow extends JFrame {
 
     /** CENTER: kartu karakter di dalam JScrollPane. */
     private JScrollPane createListArea() {
-        JPanel cards = new JPanel(new GridLayout(0, 1, 0, 8)); // satu kolom, jarak 8 px
+        JPanel cards = new JPanel(new GridLayout(0, 1, 0, AppTheme.CARD_GAP));
         cards.setBackground(AppTheme.BG_MAIN);
         for (Character c : characterList) {
             cards.add(createCharacterLabel(c));              // kartu ditambah ke PANEL, bukan ke scroll pane
@@ -73,17 +72,17 @@ public class MainWindow extends JFrame {
         // holder: menaruh cards di NORTH agar kartu mempertahankan tinggi alaminya
         JPanel holder = new JPanel(new BorderLayout());
         holder.setBackground(AppTheme.BG_MAIN);
-        holder.setBorder(BorderFactory.createEmptyBorder(8, 16, 8, 8));
+        holder.setBorder(AppTheme.LIST_BORDER);
         holder.add(cards, BorderLayout.NORTH);
 
         JScrollPane scroll = new JScrollPane(holder);        // bungkus HOLDER
         scroll.setBorder(null);                              // buang border bawaan
         scroll.getViewport().setBackground(AppTheme.BG_MAIN);
-        scroll.setPreferredSize(new Dimension(460, 280));    // tanpa ini, 50 karakter = jendela raksasa
+        scroll.setPreferredSize(AppTheme.LIST_SIZE);         // cegah jendela raksasa kalau data banyak
         return scroll;
     }
 
-    /** Satu kartu karakter (sama seperti v0.4). */
+    /** Satu kartu karakter. */
     private JLabel createCharacterLabel(Character c) {
         String info = c.getName() + " | " + c.getType()
                     + " | Lv." + c.getLevel()
@@ -104,15 +103,15 @@ public class MainWindow extends JFrame {
     /** EAST: legenda warna per role, ditumpuk vertikal dengan BoxLayout. */
     private JPanel createLegendPanel() {
         JPanel legend = new JPanel();
-        legend.setLayout(new BoxLayout(legend, BoxLayout.Y_AXIS)); // target = panel ini sendiri!
+        legend.setLayout(new BoxLayout(legend, BoxLayout.Y_AXIS)); // target = panel ini sendiri
         legend.setBackground(AppTheme.BG_MAIN);
-        legend.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 16));
+        legend.setBorder(AppTheme.LEGEND_BORDER);
 
         JLabel head = new JLabel("Legenda Role");
-        head.setFont(AppTheme.FONT_BODY.deriveFont(java.awt.Font.BOLD)); // tebalkan tanpa tahu nama font
+        head.setFont(AppTheme.FONT_BODY_BOLD);
         head.setForeground(AppTheme.TEXT_MAIN);
         legend.add(head);
-        legend.add(Box.createVerticalStrut(8));             // spasi tetap 8 px
+        legend.add(Box.createVerticalStrut(AppTheme.LEGEND_GAP)); // spasi tetap
 
         for (CharacterType type : CharacterType.values()) {  // satu chip per role
             JLabel chip = new JLabel(type.name());
@@ -123,17 +122,17 @@ public class MainWindow extends JFrame {
             chip.setBorder(AppTheme.CARD_BORDER);
             chip.setToolTipText(AppTheme.describe(type));
             legend.add(chip);
-            legend.add(Box.createVerticalStrut(6));
+            legend.add(Box.createVerticalStrut(AppTheme.CHIP_GAP));
         }
         legend.add(Box.createVerticalGlue());               // dorong semua ke atas
         return legend;
     }
 
-        /** SOUTH: status rata kiri, versi rata kanan. */
+    /** SOUTH: status rata kiri, versi rata kanan. */
     private JPanel createStatusPanel() {
         JPanel status = new JPanel(new BorderLayout());
         status.setBackground(AppTheme.BG_STATUS);
-        status.setBorder(BorderFactory.createEmptyBorder(6, 16, 6, 16));
+        status.setBorder(AppTheme.STATUS_BORDER);
 
         JLabel lbl = new JLabel("Total: " + characterList.size() + " karakter  |  Siap");
         lbl.setFont(AppTheme.FONT_MONO);
