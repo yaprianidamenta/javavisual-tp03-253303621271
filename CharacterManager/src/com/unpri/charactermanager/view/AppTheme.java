@@ -39,19 +39,21 @@ public final class AppTheme {
     public static final Border CARD_BORDER  = BorderFactory.createEmptyBorder(8, 12, 8, 12);   // padding dalam kartu
     public static final Border PANEL_BORDER = BorderFactory.createEmptyBorder(16, 16, 16, 16); // padding luar panel
 
-        // ---------- Ukuran & jarak ----------
+    // ---------- Ukuran & jarak ----------
     public static final int CARD_GAP   = 8;    // jarak antar kartu
     public static final int MIN_WIDTH  = 560;  // lebar minimum jendela
     public static final int MIN_HEIGHT = 380;  // tinggi minimum jendela
     public static final Dimension LIST_SIZE = new Dimension(460, 280); // ukuran ideal area daftar
     public static final int LEGEND_GAP = 8;    // spasi judul legenda ke chip pertama
     public static final int CHIP_GAP   = 6;    // spasi antar chip
+    public static final int STATS_GAP  = 8;    // jarak antar kotak statistik
 
     // ---------- Border per area ----------
     public static final Border HEADER_BORDER = BorderFactory.createEmptyBorder(16, 16, 8, 16);
     public static final Border LIST_BORDER   = BorderFactory.createEmptyBorder(8, 16, 8, 8);
     public static final Border LEGEND_BORDER = BorderFactory.createEmptyBorder(8, 8, 8, 16);
     public static final Border STATUS_BORDER = BorderFactory.createEmptyBorder(6, 16, 6, 16);
+    public static final Border STATS_BORDER  = BorderFactory.createEmptyBorder(0, 16, 8, 16);
 
     // ---------- Aturan tampilan ----------
     // Batas level "tinggi". Aku jadiin konstanta bernama biar angka 5 nggak nyelip

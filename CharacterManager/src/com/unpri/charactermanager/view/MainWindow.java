@@ -36,13 +36,22 @@ public class MainWindow extends JFrame {
         getContentPane().setBackground(AppTheme.BG_MAIN);  // warna di balik semua panel
         setLayout(new BorderLayout());                     // kerangka 4 wilayah
 
-        add(createHeaderPanel(), BorderLayout.NORTH);      // judul + jumlah
+        add(createNorthArea(),   BorderLayout.NORTH);      // header + statistik
         add(createListArea(),    BorderLayout.CENTER);     // daftar berscroll: satu-satunya yang tumbuh
         add(createLegendPanel(), BorderLayout.EAST);       // legenda role
         add(createStatusPanel(), BorderLayout.SOUTH);      // bar status
     }
 
-    /** NORTH: judul di kiri, jumlah karakter di kanan. */
+    /** NORTH: header di atas, panel statistik di bawahnya. */
+    private JPanel createNorthArea() {
+        JPanel north = new JPanel(new BorderLayout());
+        north.setBackground(AppTheme.BG_MAIN);
+        north.add(createHeaderPanel(), BorderLayout.NORTH);
+        north.add(createStatsPanel(),  BorderLayout.CENTER);
+        return north;
+    }
+
+    /** Judul di kiri, jumlah karakter di kanan. */
     private JPanel createHeaderPanel() {
         JPanel header = new JPanel(new BorderLayout());
         header.setBackground(AppTheme.BG_MAIN);
@@ -59,6 +68,48 @@ public class MainWindow extends JFrame {
         header.add(title, BorderLayout.WEST);               // rata kiri
         header.add(count, BorderLayout.EAST);               // rata kanan
         return header;
+    }
+
+    /** Panel statistik 2x2 dengan GridLayout. */
+    private JPanel createStatsPanel() {
+        int total = characterList.size();
+        int maxLevel = 0;
+        int sumLevel = 0;
+        for (Character c : characterList) {
+            maxLevel = Math.max(maxLevel, c.getLevel());
+            sumLevel += c.getLevel();
+        }
+        double avg = total == 0 ? 0 : (double) sumLevel / total;
+
+        JPanel stats = new JPanel(new GridLayout(2, 2, AppTheme.STATS_GAP, AppTheme.STATS_GAP));
+        stats.setBackground(AppTheme.BG_MAIN);
+        stats.setBorder(AppTheme.STATS_BORDER);
+
+        stats.add(createStatCell("Total karakter", String.valueOf(total)));
+        stats.add(createStatCell("Level tertinggi", String.valueOf(maxLevel)));
+        stats.add(createStatCell("Rata-rata level", String.format("%.1f", avg)));
+        stats.add(createStatCell("Jumlah role", String.valueOf(CharacterType.values().length)));
+        return stats;
+    }
+
+    /** Satu kotak statistik: label kecil di atas, angka di bawah. */
+    private JPanel createStatCell(String label, String value) {
+        JPanel cell = new JPanel();
+        cell.setLayout(new BoxLayout(cell, BoxLayout.Y_AXIS));
+        cell.setBackground(AppTheme.BG_STATUS);
+        cell.setBorder(AppTheme.CARD_BORDER);
+
+        JLabel lbl = new JLabel(label);
+        lbl.setFont(AppTheme.FONT_MONO);
+        lbl.setForeground(AppTheme.TEXT_MUTED);
+
+        JLabel val = new JLabel(value);
+        val.setFont(AppTheme.FONT_TITLE);
+        val.setForeground(AppTheme.GOLD);
+
+        cell.add(lbl);
+        cell.add(val);
+        return cell;
     }
 
     /** CENTER: kartu karakter di dalam JScrollPane. */
