@@ -5,6 +5,9 @@ public class Character {
     // Dipakai sebagai penghitung untuk membuat id otomatis
     private static int totalCharacterCreated = 0;
 
+    // Batas level untuk role MAGE (aturan konsistensi role dan level)
+    private static final int MAGE_MAX_LEVEL = 60;
+
     // Semua atribut dibuat private (encapsulation) supaya tidak bisa
     // diubah sembarangan dari luar class
     private int id;
@@ -25,6 +28,9 @@ public class Character {
     }
         if (level < 1 || level > 99) {                              // aturan 3: rentang level
             throw new IllegalArgumentException("Level harus 1-99");
+    }
+        if (type == CharacterType.MAGE && level > MAGE_MAX_LEVEL) {  // aturan 4: konsistensi role dan level
+            throw new IllegalArgumentException("Role MAGE maksimal level " + MAGE_MAX_LEVEL);
     }
         this.name = name;
         this.type = type;
