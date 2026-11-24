@@ -8,6 +8,9 @@ import java.util.ArrayList;
  */
 public class CharacterManager {
 
+    // Batas jumlah karakter di daftar. Ini aturan domain, jadi tempatnya di Model
+    private static final int MAX_CHARACTERS = 10;
+
     private ArrayList<Character> characterList;
 
     public CharacterManager() {
@@ -18,8 +21,12 @@ public class CharacterManager {
      * Menambahkan karakter baru ke dalam list.
      * Menolak jika sudah ada karakter dengan nama yang sama (cek via equals()).
      * @return true jika berhasil ditambahkan, false jika ditolak karena duplikat
+     * @throws IllegalArgumentException jika daftar sudah penuh
      */
     public boolean addCharacter(Character character) {
+        if (characterList.size() >= MAX_CHARACTERS) {      // cuma Manager yang tahu total daftar
+            throw new IllegalArgumentException("Daftar penuh, maksimal " + MAX_CHARACTERS + " karakter");
+        }
         if (findByName(character.getName()) != null) {   // cek dulu apakah nama sudah ada
             System.out.println("❌ Gagal: karakter dengan nama '" + character.getName() + "' sudah ada!");
             return false;
