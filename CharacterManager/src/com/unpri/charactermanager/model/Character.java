@@ -17,10 +17,15 @@ public class Character {
 
     // Constructor 1: karakter baru, HP & attack dihitung dari level
     public Character(String name, CharacterType type, int level) {
-        // Validasi: level tidak boleh kurang dari 1
-        if (level < 1) {
-            throw new IllegalArgumentException("Level minimal adalah 1");
-        }
+        if (name == null || name.isBlank()) {                       // aturan 1: nama wajib
+        throw new IllegalArgumentException("Nama tidak boleh kosong");
+    }
+        if (type == null) {                                         // aturan 2: role wajib
+            throw new IllegalArgumentException("Role wajib dipilih");
+    }
+        if (level < 1 || level > 99) {                              // aturan 3: rentang level
+            throw new IllegalArgumentException("Level harus 1-99");
+    }
         this.name = name;
         this.type = type;
         this.level = level;

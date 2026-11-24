@@ -42,6 +42,20 @@ public class CharacterManager {
         return null;                                  // tidak ditemukan setelah seluruh list diperiksa
     }
 
+        /**
+     * Cek apakah sudah ada karakter dengan nama yang sama (huruf besar/kecil dianggap sama).
+     * Ditaruh di Manager karena cuma Manager yang tahu seluruh daftar karakter,
+     * jadi form di View nggak boleh ngecek sendiri.
+     */
+    public boolean isNameTaken(String name) {
+        for (Character c : getAllCharacters()) {
+            if (c.getName().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Menghapus karakter dari list berdasarkan nama.
      * @return true jika berhasil dihapus, false jika tidak ditemukan
