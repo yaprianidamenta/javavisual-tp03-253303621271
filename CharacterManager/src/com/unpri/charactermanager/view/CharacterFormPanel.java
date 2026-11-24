@@ -25,6 +25,7 @@ public class CharacterFormPanel extends JPanel {
     private static final int NAME_MIN_LENGTH = 3;
     private static final int NAME_MAX_LENGTH = 20;
     private static final String NAME_PATTERN = "[A-Za-z ]+";
+    private static final String DOUBLE_SPACE = "  ";   // dua spasi berurutan
     private static final int NAME_FIELD_COLUMNS = 14;
     private static final String MSG_NAME_TAKEN = "Nama sudah dipakai";
 
@@ -146,6 +147,9 @@ public class CharacterFormPanel extends JPanel {
         }
         if (!name.matches(NAME_PATTERN)) {
             return "Nama hanya huruf dan spasi";                         // 3. format
+        }
+        if (name.contains(DOUBLE_SPACE)) {
+            return "Nama tidak boleh memakai spasi ganda";               // 3b. format (aturan baru)
         }
         if (manager.isNameTaken(name)) {
             return MSG_NAME_TAKEN;                                       // 4. keunikan (tanya Model)
